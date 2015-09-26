@@ -35,6 +35,7 @@ import uuid
 
 def myPage(request, name):
   #print name
+  #form = BookForm(request.POST or None)
   context = {"name": name}
   template = "myPage.html"
   return render(request, template, context)
@@ -54,7 +55,7 @@ def home(request):
     name = form.cleaned_data['name']
     new_reviewer_old, created = Reviewer.objects.get_or_create(email=email, name=name)
     if created:
-      new_reviewer_old.ref_name = get_ref_name()
+      new_reviewer_old.ref_name = ref_name()
       # add our books that we reffer to out reviewer profile or related
       if not obj == None:
         new_reviewer_old.book = obj
