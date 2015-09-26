@@ -1,11 +1,6 @@
 from django import forms
 from .models import Reviewer
 
-#class ReviewerForm(forms.ModelForm):
-#  class Meta:
-#    model = Reviewer
-#    fields = ["name", "email"]
-
 class EmailForm(forms.Form):
   email = forms.EmailField(),
   name  = forms.CharField()

@@ -33,47 +33,39 @@ import uuid
 #  name = str()
 #  return name
 
-def myPage(request):
-  print name
+def myPage(request, name):
+  #print name
   context = {"name": name}
   template = "myPage.html"
   return render(request, template, context)
 
 
 def home(request):
-  #print request.META.get("REMOTE_ADDR")
-  #print request.META.get("HTTP_X_FORWARDED_FOR")
-  #print request.POST["email"], print request.POST["email_2"],
+  try:
+    reviewer_name = request.session['reviewer_name_ref']
+    obj = Reviewer.objects.get(name=reviewer_name)
+  except:
+      obj = None
 
-  #This is using Reg Django Forms
-  #form = EmailForm(request.POST or None)
-  #if form.is_valid():
-  #  email= form.cleaned_data['email']
-  #  new_reviewer, created = Reviewer.objects.get_or_create(email=email)
-  #  print new_reviewer, created
-  #  print new_reviewer.timestamp
-  #  if created:
-  #   print "This Obj was created"
-
-  #model form
-  form = ReviewerForm(request.POST or None) #Reviewer
+  form = ReviewerForm(request.POST or None)
   if form.is_valid():
     new_reviewer = form.save(commit=False)
-    #might do something here
-    email= form.cleaned_data['email']
-    name= form.cleaned_data['name']
-    new_reviewer_old, created = Reviewer.objects.get_or_create(email=email)
+    email = form.cleaned_data['email']
+    name = form.cleaned_data['name']
+    new_reviewer_old, created = Reviewer.objects.get_or_create(email=email, name=name)
     if created:
-      #new_reviewer_old.ref_id = get_ref_id()
+      new_reviewer_old.ref_name = get_ref_name()
+      # add our books that we reffer to out reviewer profile or related
+      if not obj == None:
+        new_reviewer_old.book = obj
       new_reviewer_old.ip_address = get_ip(request)
-      #new_reviewer_old.name = get_name()
       new_reviewer_old.save()
-      #messages.success(request, 'Profile created.')
-      #success_message = "Profile was created successfully"
+
+    #print all "books" that read as a result of being reviewed
+
     #redirect here
     return HttpResponseRedirect("/%s" %(new_reviewer_old.name))
-    #new_reviewer.ip_address = get_ip(request)
-    #new_reviewer.save()
+
 
   context = {"form": form}
   template = "home.html"
