@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Reviewer#, ReviewerBooks
+from .models import Reviewer
 
 
 class ReviewerAdmin(admin.ModelAdmin):
@@ -10,5 +10,3 @@ class ReviewerAdmin(admin.ModelAdmin):
       model = Reviewer
 
 admin.site.register(Reviewer, ReviewerAdmin)
-
-#admin.site.register(ReviewerBooks)
