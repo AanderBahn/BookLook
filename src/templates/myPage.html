@@ -1,12 +1,15 @@
 {% extends "inLook.html" %}
 
 {% block content%}
-<div>
-<a href="/newBook">Add a Book</a>
+<div class="buttonBlock">
+ <button type="button" class="btn btn-info" href="/newBook"><a href="/newBook">&nbsp;Add a Book&nbsp;&nbsp;</a>
+ </button>
+
+ <button type="button" class="btn btn-info" href="/newBook"><a href="/newReview">Add a Review</a>
+ </button>
 </div>
-<div>
-<a href="/newReview">Add a Review</a>
-</div>
+
+<hr>
 
 {% for review in books_review %}
  <div>

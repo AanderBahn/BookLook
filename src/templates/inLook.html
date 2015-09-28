@@ -18,10 +18,33 @@
     <link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
 
     <style>
-     body {
-      padding-top: 50px;
-      padding-bottom: 20px;
+
+     #topper {
+      background-color: ;
      }
+
+     div .container {
+      background-image: url(https://upload.wikimedia.org/wikipedia/commons/2/2b/Bookshelf.jpg);
+      margin: auto;
+      padding: 40px 5px;
+      background-color: black;
+     }
+     .container h1 {
+      color: white;
+     }
+     div .jumbotronn {
+       background-color: black;
+     }
+     div .banner {
+      margin-left: 10px;
+     }
+     a {
+      color: white;
+     }
+     .buttonBlock {
+      padding: 10px 10px 10px 0px;
+     }
+
     </style>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -68,16 +91,17 @@
 
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-      <img src="bookshelf.jpg">
+    <div class="jumbotronn" style="background-image: url(bookshelf.jpg);">
+      <div class="container" id="topper">
+       <div class="banner">
         <h1>BookLook BookShelf</h1>
         <p></p>
         <p><a class="btn btn-primary btn-lg" href="#" role="button">Let's get Reading! &raquo;</a></p>
+       </div>
       </div>
     </div>
 
-    <div class="container">
+    <div class="container" id="main">
     {% block content%}
 
     {% endblock %}
