@@ -1,10 +1,10 @@
 from django.shortcuts import render
 
 
-#def home(request):
-#  context = {}
-#  template = "home.html"
-#  return render(request, template, context)
+def testHome(request):
+  context = {}
+  template = "elseWise.html"
+  return render(request, template, context)
 
 #def book(request):
  # context = {}

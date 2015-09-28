@@ -1,13 +1,29 @@
 {% extends "inLook.html" %}
 
 {% block content%}
+<div>
+<a href="/newBook">Add a Book</a>
+</div>
+<div>
+<a href="/newReview">Add a Review</a>
+</div>
 
-<h2>Add New Book Review</h2>
+{% for review in books_review %}
+ <div>
+    <h5>{{ review.title }}</h5>
+    {{ review.review }}
+    {{ review.reviewer }}
+ </div>
+ <div>
+ </div>
+{% endfor %}
+
+<!--h2>Add New Book Review</h2>
 
 <form method="POST" action=""> {% csrf_token %}
 {{ form.as_p }}
 <input type='submit' value='Add' class='btn' />
-</form>
+</form-->
 
 {% endblock %}
 

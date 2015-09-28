@@ -40,7 +40,7 @@ INSTALLED_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'south',
+    'south'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,6 +67,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+SOUTH_DATABASE_ADAPTERS = {
+'default': 'south.db.sqlite3'}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

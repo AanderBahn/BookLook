@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from .models import Book, Review
 
 class BookForm(forms.Form):
   title  = forms.CharField(),
@@ -14,3 +14,11 @@ class BookForm(forms.ModelForm):
     model = Book
     fields = ["title", "author","genre","isbn"]
 
+class ReviewForm(forms.Form):
+  title = forms.ModelChoiceField(queryset=Book.objects.all().order_by('title'))
+  reviewer = forms.CharField()
+
+class ReviewForm(forms.ModelForm):
+  class Meta:
+    model = Review
+    fields = ["title","review","reviewer"]

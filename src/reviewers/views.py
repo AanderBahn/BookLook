@@ -1,8 +1,10 @@
 from django.shortcuts import render, HttpResponseRedirect
-#from.django.contrib import messages
+from django.contrib.auth import authenticate, login
+from .forms  import  ReviewerForm, EmailForm
+from .models import Reviewer
 
-from.forms  import  ReviewerForm, EmailForm
-from.models import Reviewer
+from books.forms import BookForm, ReviewForm
+from books.models import Book, Review
 
 def get_ip(request):
   try:
@@ -15,6 +17,9 @@ def get_ip(request):
         ip = ""
   #pass
   return ip
+
+def get_ref_name():
+  return 'book'
 
 #str(user_id)[:11].replace('-', '')
 import uuid
@@ -33,15 +38,54 @@ import uuid
 #  name = str()
 #  return name
 
-def myPage(request, name):
-  #print name
-  #form = BookForm(request.POST or None)
-  context = {"name": name}
-  template = "myPage.html"
+def newReview(request):
+  form = ReviewForm(request.POST or None)
+  if form.is_valid():
+    new_Review = form.save(commit=False)
+    title = form.cleaned_data['title']
+    review = form.cleaned_data['review']
+    reviewer = form.cleaned_data['reviewer']
+    new_review_old, created = Review.objects.get_or_create(title=title, review=review, reviewer=reviewer)
+    template = "myPage.html"
+    context = {"form": form}
+    return render(request, template, context)
+
+  template = "newReview.html"
+  context = {"form": form}
   return render(request, template, context)
 
 
+def newBook(request):
+  form = BookForm(request.POST or None)
+  if form.is_valid():
+    new_book = form.save(commit=False)
+    title = form.cleaned_data['title']
+    author = form.cleaned_data['author']
+    genre = form.cleaned_data['genre']
+    isbn = form.cleaned_data['isbn']
+    new_book_old, created = Book.objects.get_or_create(title=title, author=author, genre=genre, isbn=isbn)
+    template = "myPage.html"
+    context = {"form": form}
+    return render(request, template, context)
+
+  template = "newBook.html"
+  context = {"form": form}
+  return render(request, template, context)
+
+def myPage(request, name):
+ books_review = Review.objects.all()
+ #review = books_review.objects.get(all)
+
+
+ template = "myPage.html"
+ context = {"books_review": books_review}
+ return render(request, template, context)
+
+
 def home(request):
+  #username = request.POST['username']
+  #password = request.POST['password']
+  #user = authenticate(username=username, password=password)
   try:
     reviewer_name = request.session['reviewer_name_ref']
     obj = Reviewer.objects.get(name=reviewer_name)
@@ -54,15 +98,6 @@ def home(request):
     email = form.cleaned_data['email']
     name = form.cleaned_data['name']
     new_reviewer_old, created = Reviewer.objects.get_or_create(email=email, name=name)
-    if created:
-      new_reviewer_old.ref_name = ref_name()
-      # add our books that we reffer to out reviewer profile or related
-      if not obj == None:
-        new_reviewer_old.book = obj
-      new_reviewer_old.ip_address = get_ip(request)
-      new_reviewer_old.save()
-
-    #print all "books" that read as a result of being reviewed
 
     #redirect here
     return HttpResponseRedirect("/%s" %(new_reviewer_old.name))
