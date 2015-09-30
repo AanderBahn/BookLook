@@ -41,14 +41,17 @@ import uuid
 def newReview(request):
   form = ReviewForm(request.POST or None)
   if form.is_valid():
+    books_review = Review.objects.all()
     new_Review = form.save(commit=False)
+    headline = form.cleaned_data['headline']
     title = form.cleaned_data['title']
     review = form.cleaned_data['review']
     reviewer = form.cleaned_data['reviewer']
-    new_review_old, created = Review.objects.get_or_create(title=title, review=review, reviewer=reviewer)
+    new_review_old, created = Review.objects.get_or_create(title=title, review=review, reviewer=reviewer, headline=headline)
     template = "myPage.html"
-    context = {"form": form}
+    context = {"books_review": books_review}
     return render(request, template, context)
+    #return HttpResponseRedirect("/%s" %(new_reviewer_old.name))
 
   template = "newReview.html"
   context = {"form": form}
@@ -58,6 +61,7 @@ def newReview(request):
 def newBook(request):
   form = BookForm(request.POST or None)
   if form.is_valid():
+    books_review = Review.objects.all()
     new_book = form.save(commit=False)
     title = form.cleaned_data['title']
     author = form.cleaned_data['author']
@@ -65,7 +69,7 @@ def newBook(request):
     isbn = form.cleaned_data['isbn']
     new_book_old, created = Book.objects.get_or_create(title=title, author=author, genre=genre, isbn=isbn)
     template = "myPage.html"
-    context = {"form": form}
+    context = {"books_review": books_review}
     return render(request, template, context)
 
   template = "newBook.html"
@@ -74,23 +78,12 @@ def newBook(request):
 
 def myPage(request, name):
  books_review = Review.objects.all()
- #review = books_review.objects.get(all)
-
-
  template = "myPage.html"
  context = {"books_review": books_review}
  return render(request, template, context)
 
 
 def home(request):
-  #username = request.POST['username']
-  #password = request.POST['password']
-  #user = authenticate(username=username, password=password)
-  try:
-    reviewer_name = request.session['reviewer_name_ref']
-    obj = Reviewer.objects.get(name=reviewer_name)
-  except:
-      obj = None
 
   form = ReviewerForm(request.POST or None)
   if form.is_valid():

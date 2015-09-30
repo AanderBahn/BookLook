@@ -13,12 +13,10 @@
 
 {% for review in books_review %}
  <div>
-    <h5>{{ review.title }}</h5>
-    {{ review.review }}
-    {{ review.reviewer }}
- </div>
- <div>
- </div>
+    <h4>{{ review.headline }}&nbsp;-&nbsp;{{ review.title }}</h4>
+    <div class="reviewText">{{ review.review }}</div>
+    <div class="writtenBy">written by&nbsp;-&nbsp;{{ review.reviewer }}</div>
+    <div class="divider"></div>
 {% endfor %}
 
 <!--h2>Add New Book Review</h2>

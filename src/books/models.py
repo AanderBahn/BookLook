@@ -5,7 +5,7 @@ class Book(models.Model):
    title  = models.CharField(max_length=50)
    author = models.CharField(max_length=50)
    genre = models.CharField(max_length=50, blank=True)
-   isbn = models.CharField(max_length=50,null=True,blank=True)
+   isbn = models.CharField(max_length=50,null=True,blank=True, default='?')
    timestamp = models.DateTimeField(auto_now_add = True, auto_now=False)
    updated = models.DateTimeField(auto_now_add = False, auto_now=True)
 
@@ -16,6 +16,7 @@ class Book(models.Model):
 class Review(models.Model):
   title = models.ForeignKey(Book)
   reviewer = models.ForeignKey(Reviewer,unique=True)
+  headline = models.CharField(max_length=50, default='')
   review = models.TextField(max_length=500)
 
   def __unicode__(self):

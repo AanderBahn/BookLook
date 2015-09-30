@@ -12,7 +12,7 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Book, BookAdmin)
 
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title','review','reviewer']
+    list_display = ['headline','title', 'reviewer', 'review']
     class Meta:
       model = Review
 
